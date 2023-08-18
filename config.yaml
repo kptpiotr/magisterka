@@ -1,0 +1,8 @@
+credentials:
+  usernames:
+cookie:
+  expiry_days: 60
+  key: test_erp_login
+  name: test_erp_login
+preauthorized:
+  emails:
