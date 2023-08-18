@@ -1,0 +1,7 @@
+streamlit-authenticator
+pandas
+numpy
+plotly
+sorcery
+mysql-connector-python
+python-docx
