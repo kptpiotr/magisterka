@@ -62,12 +62,6 @@ if utils.get_auth_status():
 
         st.divider()
 
-        st.markdown("### Podsumowanie")
-
-        st.write("Tutaj wykresy: najbardziej aktywni, kto wypracował najwięcej zysków itp")
-
-        st.divider()
-
         st.markdown("### Dodaj użytkownika")
 
         if utils.get_user_role() == 'Administrator':
