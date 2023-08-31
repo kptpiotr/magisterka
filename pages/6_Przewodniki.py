@@ -181,7 +181,6 @@ if utils.get_auth_status():
             production_order = st.text_input("Zlecenie produkcyjne")
 
             with st.form('guide'):
-                st.write("Tutaj wszystko się uzupełnia jak się wybierze zlecenie produkcyjne (wartość domyślna)")
                 production_guide_number = st.text_input("Nr przewodnika")
                 part_number = st.text_input("Nr części", value="0")
                 part_name = st.text_input("Nazwa części", value="0")
