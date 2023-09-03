@@ -1,0 +1,159 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  name varchar
+  surname varchar
+  email varchar
+  username varchar
+  password_hash varchar
+  role varchar
+}
+
+Table employees {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  name varchar
+  surname varchar
+  work_cost_hour float
+  type varchar
+}
+
+Table production_orders {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  name varchar
+  order_number int
+  trade_order_id int
+  number int
+  start date
+  deadline date [note: 'default 0']
+  progress int
+  material varchar
+  status varchar
+  comment varchar
+}
+
+Table trade_orders {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  status varchar
+  name varchar
+  order_number int
+  order_type enum('zlecenie zewnetrzne', 'zlecenie wewnetrzne')
+  client varchar
+  material varchar
+  number_ordered int
+  number_to_make int
+  deadline date
+  comment varchar(5000)
+  cost float
+  price float
+}
+
+Table machines {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  name varchar
+  type varchar
+  work_cost_hour float
+}
+
+
+Table materials_actions {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  name varchar
+  production_order_id int [note: 'another type for replenishment']
+  action_type enum('przyjecie', 'wydanie')
+  material varchar
+  amount float
+  date date
+  status enum('anulowane', 'w trakcie', 'zakonczone')
+  comment varchar(5000)
+  }
+
+Table machines_actions {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  production_order_number int
+  state int
+  start_date date
+  finish_date date
+}
+
+Table employees_actions {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  production_order_number int
+  state int
+  start_date date
+  finish_date date
+  }
+
+Table attendance {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  date date [not null]
+  shift int [default: 1]
+  employee_id int [not null]
+  present bool
+  comment varchar
+}
+
+Table holidays {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  date date
+  name varchar
+}
+
+Table tools {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  name varchar
+  number varchar
+  specification varchar
+}
+
+Table materials_levels {
+  id int [primary key, increment]
+  created_at timestamp
+  created_by_id int
+  material varchar
+  lower_limit float
+  upper_limit float
+  average_delivery_time int
+}
+
+Ref: production_orders.trade_order_id > trade_orders.id
+Ref: trade_orders.created_by_id > users.id
+Ref: users.created_by_id > users.id
+Ref: employees.created_by_id > users.id
+Ref: production_orders.created_by_id > users.id
+Ref: machines.created_by_id > users.id
+Ref: materials_actions.created_by_id > users.id
+Ref: machines_actions.created_by_id > users.id
+Ref: employees_actions.created_by_id > users.id
+Ref: attendance.created_by_id > users.id
+Ref: holidays.created_by_id > users.id
+Ref: tools.created_by_id > users.id
+Ref: materials_levels.created_by_id > users.id
+Ref: materials_actions.production_order_id > production_orders.id
+Ref: attendance.employee_id > employees.id
+
+Ref: machines_actions.production_order_number > production_orders.id
+Ref: employees_actions.production_order_number > production_orders.id
